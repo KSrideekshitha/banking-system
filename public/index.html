@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexBank — Automated Banking System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- LANDING PAGE -->
+  <div id="page-landing" class="page active">
+    <div class="bg-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="landing-card">
+      <div class="bank-logo">
+        <div class="logo-icon">⬡</div>
+        <span>NexBank</span>
+      </div>
+      <h1 class="landing-title">Your Money.<br/><span class="accent">Secured.</span></h1>
+      <p class="landing-sub">A next-generation automated banking platform. Fast, safe, and always available.</p>
+      <div class="landing-btns">
+        <button class="btn-primary" onclick="showPage('login')">Login</button>
+        <button class="btn-outline" onclick="showPage('signup')">Sign Up</button>
+      </div>
+      <div class="landing-stats">
+        <div class="stat"><span class="stat-n">256-bit</span><span class="stat-l">Encryption</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-n">24/7</span><span class="stat-l">Access</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-n">Zero</span><span class="stat-l">Hidden Fees</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN PAGE -->
+  <div id="page-login" class="page">
+    <div class="bg-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="form-card">
+      <button class="back-btn" onclick="showPage('landing')">← Back</button>
+      <div class="bank-logo small">
+        <div class="logo-icon">⬡</div>
+        <span>NexBank</span>
+      </div>
+      <h2 class="form-title">Welcome Back</h2>
+      <p class="form-sub">Sign in to your account</p>
+      <div id="login-msg" class="message hidden"></div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="login-email" placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="login-password" placeholder="••••••••" />
+      </div>
+      <button class="btn-primary full" onclick="handleLogin()">Login to Account</button>
+      <p class="form-switch">Don't have an account? <a onclick="showPage('signup')">Sign Up</a></p>
+    </div>
+  </div>
+
+  <!-- SIGNUP PAGE -->
+  <div id="page-signup" class="page">
+    <div class="bg-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="form-card">
+      <button class="back-btn" onclick="showPage('landing')">← Back</button>
+      <div class="bank-logo small">
+        <div class="logo-icon">⬡</div>
+        <span>NexBank</span>
+      </div>
+      <h2 class="form-title">Create Account</h2>
+      <p class="form-sub">Join NexBank today</p>
+      <div id="signup-msg" class="message hidden"></div>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="signup-name" placeholder="John Doe" />
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="signup-email" placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="signup-password" placeholder="Min. 6 characters" />
+      </div>
+      <button class="btn-primary full" onclick="handleSignup()">Create Account</button>
+      <p class="form-switch">Already have an account? <a onclick="showPage('login')">Login</a></p>
+    </div>
+  </div>
+
+  <!-- DEPOSIT ONLY PAGE (balance = 0) -->
+  <div id="page-deposit-only" class="page">
+    <div class="bg-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="form-card">
+      <div class="dash-header">
+        <div class="bank-logo small"><div class="logo-icon">⬡</div><span>NexBank</span></div>
+        <button class="btn-logout" onclick="handleLogout()">Logout</button>
+      </div>
+      <div class="welcome-box">
+        <div class="welcome-icon">🎉</div>
+        <h2>Welcome, <span id="deposit-only-name" class="accent"></span>!</h2>
+        <p>Your account is ready. Make your first deposit to unlock all features.</p>
+      </div>
+      <div class="balance-badge zero">Balance: ₹0.00</div>
+      <div id="deposit-only-msg" class="message hidden"></div>
+      <div class="form-group">
+        <label>Deposit Amount (₹)</label>
+        <input type="number" id="deposit-only-amount" placeholder="e.g. 5000" min="1" />
+      </div>
+      <button class="btn-primary full" onclick="handleDepositOnly()">💰 Make First Deposit</button>
+    </div>
+  </div>
+
+  <!-- DASHBOARD PAGE -->
+  <div id="page-dashboard" class="page">
+    <div class="bg-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="dashboard-wrap">
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="bank-logo"><div class="logo-icon">⬡</div><span>NexBank</span></div>
+        <nav class="nav-menu">
+          <button class="nav-btn active" onclick="switchTab('deposit', this)">
+            <span class="nav-icon">↑</span> Deposit
+          </button>
+          <button class="nav-btn" onclick="switchTab('withdraw', this)">
+            <span class="nav-icon">↓</span> Withdraw
+          </button>
+          <button class="nav-btn" onclick="switchTab('transfer', this)">
+            <span class="nav-icon">⇄</span> Transfer
+          </button>
+          <button class="nav-btn" onclick="switchTab('balance', this)">
+            <span class="nav-icon">◎</span> Balance
+          </button>
+          <button class="nav-btn" onclick="switchTab('history', this)">
+            <span class="nav-icon">≡</span> History
+          </button>
+        </nav>
+        <button class="btn-logout sidebar-logout" onclick="handleLogout()">⏻ Logout</button>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="dash-main">
+        <!-- Top Bar -->
+        <div class="dash-topbar">
+          <div>
+            <h2 class="dash-greeting">Hello, <span id="dash-name" class="accent"></span> 👋</h2>
+            <p class="dash-date" id="dash-date"></p>
+          </div>
+          <div class="balance-chip">
+            <span class="chip-label">Balance</span>
+            <span class="chip-val" id="dash-balance">₹0.00</span>
+          </div>
+        </div>
+
+        <!-- Tab: Deposit -->
+        <div class="tab-content active" id="tab-deposit">
+          <div class="section-header"><h3>Deposit Funds</h3><p>Add money to your account</p></div>
+          <div id="deposit-msg" class="message hidden"></div>
+          <div class="form-group">
+            <label>Amount (₹)</label>
+            <input type="number" id="deposit-amount" placeholder="Enter deposit amount" min="1" />
+          </div>
+          <button class="btn-primary" onclick="handleDeposit()">💰 Deposit</button>
+        </div>
+
+        <!-- Tab: Withdraw -->
+        <div class="tab-content" id="tab-withdraw">
+          <div class="section-header"><h3>Withdraw Funds</h3><p>Withdraw money from your account</p></div>
+          <div id="withdraw-msg" class="message hidden"></div>
+          <div class="form-group">
+            <label>Amount (₹)</label>
+            <input type="number" id="withdraw-amount" placeholder="Enter withdrawal amount" min="1" />
+          </div>
+          <button class="btn-primary" onclick="handleWithdraw()">💸 Withdraw</button>
+        </div>
+
+        <!-- Tab: Transfer -->
+        <div class="tab-content" id="tab-transfer">
+          <div class="section-header"><h3>Transfer Funds</h3><p>Send money to another account</p></div>
+          <div id="transfer-msg" class="message hidden"></div>
+          <div class="form-group">
+            <label>Recipient Email</label>
+            <input type="email" id="transfer-email" placeholder="recipient@example.com" />
+          </div>
+          <div class="form-group">
+            <label>Amount (₹)</label>
+            <input type="number" id="transfer-amount" placeholder="Enter transfer amount" min="1" />
+          </div>
+          <button class="btn-primary" onclick="handleTransfer()">⇄ Transfer</button>
+        </div>
+
+        <!-- Tab: Balance -->
+        <div class="tab-content" id="tab-balance">
+          <div class="section-header"><h3>Account Balance</h3><p>Your current financial overview</p></div>
+          <div class="balance-display-card">
+            <div class="bal-label">Available Balance</div>
+            <div class="bal-amount" id="tab-balance-amount">₹0.00</div>
+            <div class="bal-user" id="tab-balance-name"></div>
+            <div class="bal-email" id="tab-balance-email"></div>
+            <div class="bal-since" id="tab-balance-since"></div>
+          </div>
+          <button class="btn-outline" onclick="refreshBalance()">↻ Refresh Balance</button>
+        </div>
+
+        <!-- Tab: History -->
+        <div class="tab-content" id="tab-history">
+          <div class="section-header"><h3>Transaction History</h3><p>Your last 20 transactions</p></div>
+          <div class="table-wrap">
+            <table class="tx-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Description</th>
+                  <th>Balance After</th>
+                  <th>Date & Time</th>
+                </tr>
+              </thead>
+              <tbody id="tx-tbody">
+                <tr><td colspan="6" class="no-data">Loading transactions...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
