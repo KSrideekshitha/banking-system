@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🏦 NexBank — Automated Banking System
 
 A full-stack banking application built with Node.js, Express, SQLite, and vanilla HTML/CSS/JS with a dark theme.
@@ -104,3 +105,8 @@ Go to: **http://localhost:3000**
 ---
 
 *Built for college project — NexBank Automated Banking System*
+=======
+# Banking System
+
+This is automated banking system project using frontend and backend.
+>>>>>>> fada108f8a35d989995683f49185ec53ede31dde
